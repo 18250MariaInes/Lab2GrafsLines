@@ -77,7 +77,7 @@ class Render(object):
         nblue=int(255*blue)
         self.curr_color = color(nred, ngreen, nblue)
     
-    def glVertex_coord(self, x,y):#helper de Carlos
+    def glVertex_coord(self, x,y):#helper para dibujar puntas en la funcion de glLine
         self.pixels[y][x]=self.curr_color
 
     #escribe el archivo de dibujo
@@ -118,17 +118,17 @@ class Render(object):
         archivo.close()
 
     def glLine(self, x0, y0, x1, y1):
-        x0 = round(( x0 + 1) * (self.vportwidth / 2 ) + self.vportx)
-        x1 = round(( x1 + 1) * (self.vportwidth / 2 ) + self.vportx)
-        y0 = round(( y0 + 1) * (self.vportheight / 2 ) + self.vporty)
-        y1 = round(( y1 + 1) * (self.vportheight / 2 ) + self.vporty)
+        x0 = int(( x0 + 1) * (self.vportwidth / 2 ) + self.vportx)
+        x1 = int(( x1 + 1) * (self.vportwidth / 2 ) + self.vportx)
+        y0 = int(( y0 + 1) * (self.vportheight / 2 ) + self.vporty)
+        y1 = int(( y1 + 1) * (self.vportheight / 2 ) + self.vporty)
 
         dx = abs(x1 - x0)
         dy = abs(y1 - y0)
 
-        steep = dy > dx
+        inc = dy > dx
 
-        if steep:
+        if inc:
             x0, y0 = y0, x0
             x1, y1 = y1, x1
 
@@ -141,19 +141,20 @@ class Render(object):
 
         offset = 0
         limit = 0.5
-        
         m = dy/dx
         y = y0
-
         for x in range(x0, x1 + 1):
-            if steep:
+            if inc:
                 self.glVertex_coord(y, x)
             else:
                 self.glVertex_coord(x, y)
-
-            offset += m
+            offset += dy/dx
             if offset >= limit:
-                y += 1 if y0 < y1 else -1
+                #y += 1 if y0 < y1 else -1
+                if y0 < y1:
+                    y += 1
+                else:
+                    y-=1
                 limit += 1
 
 
