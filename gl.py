@@ -148,7 +148,7 @@ class Render(object):
                 self.glVertex_coord(y, x)
             else:
                 self.glVertex_coord(x, y)
-            offset += dy/dx
+            offset += m
             if offset >= limit:
                 #y += 1 if y0 < y1 else -1
                 if y0 < y1:

@@ -25,12 +25,31 @@ r.glViewPort(posX, posY, width - width/2 , height - height/2)
 r.glColor(1,0,0)
 
 
-r.glLine(-1,-1, 1,-1)
+"""r.glLine(-1,-1, 1,-1)
 r.glLine(-1,-1, -1,0)
 r.glLine(1,-1, 1,0)
 r.glLine(-1,0, 0, 1)
 r.glLine(0,1, 1,0)
 r.glLine( -1, 0, 1, 0)
+r.glLine(0,0, 1,1)
+r.glLine(0,0, -1,-1)
+r.glLine(0,0, 0.5,0.5)"""
+r.glLine(0, -1, 0, 1)
+r.glLine(-1, 0, 1, 0)
+
+
+r.glLine(1, -1, -1, 1)
+r.glLine(-1, -1, 1, 1)
+
+r.glLine(-1, 1, 1, 1)
+r.glLine(1, -1, 1, 1)
+r.glLine(1, -1, -1, -1)
+r.glLine(-1, -1, -1, 1)
+r.glColor(0,1,0)
+r.glLine(-1, -1, -1, 1)
+r.glLine(0, 0, 0, 1)
+#r.glLine(0, 0, )
+r.glLine(0.5, 1, 0, 0)
 
 
 r.glFinish('output.bmp')
