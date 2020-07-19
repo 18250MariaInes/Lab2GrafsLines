@@ -2,7 +2,7 @@
 Maria Ines Vasquez Figueroa
 18250
 Gráficas
-SR1 Points
+SR2 Lines
 Main
 """
 
