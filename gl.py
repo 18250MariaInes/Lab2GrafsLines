@@ -117,7 +117,51 @@ class Render(object):
 
         archivo.close()
 
-    def glLine(self, x0, y0, x1, y1):
+    def glLine(self, x0, y0, x1, y1): #algoritmo de clase modificado en base al algoritmo de Bersenham extraido de : https://www.geeksforgeeks.org/bresenhams-line-generation-algorithm/
+        x0 = int(( x0 + 1) * (self.vportwidth / 2 ) + self.vportx)
+        x1 = int(( x1 + 1) * (self.vportwidth / 2 ) + self.vportx)
+        y0 = int(( y0 + 1) * (self.vportheight / 2 ) + self.vporty)
+        y1 = int(( y1 + 1) * (self.vportheight / 2 ) + self.vporty)
+
+        dx = abs(x1 - x0)
+        dy = abs(y1 - y0)
+
+        inc = dy > dx
+
+        if inc:
+            x0, y0 = y0, x0
+            x1, y1 = y1, x1
+
+        if x0 > x1:
+            x0, x1 = x1, x0
+            y0, y1 = y1, y0
+
+        dx = abs(x1 - x0)
+        dy = abs(y1 - y0)
+
+        limit = 0.5
+    
+        #a diferencia del visto en clase, el algoritmo consultado inicializa m como 2 veces el diferencial en y 
+        #y offset como la resta entre la pendiente m y 2 veces el diferencial en x
+        m=2*(dy)
+        offset=m-2*dx
+        y = y0
+        for x in range(x0, x1 + 1):
+            if inc:
+                self.glVertex_coord(y, x)
+            else:
+                self.glVertex_coord(x, y)
+            offset += m
+            if offset >= limit:
+                if y0 < y1:
+                    y += 1
+                else:
+                    y-=1
+                limit += 1
+                #igualmente cuando offset es mayor o igual que el limite 0.5, se le resta 2 veces el diferencial en x
+                offset-=2*dx
+    
+    def glLine_c(self, x0, y0, x1, y1):#algoritmo realizado con Carlos en clase, lo mantengo como comparacion y el resultado es muy similar al desarrollado por mi
         x0 = int(( x0 + 1) * (self.vportwidth / 2 ) + self.vportx)
         x1 = int(( x1 + 1) * (self.vportwidth / 2 ) + self.vportx)
         y0 = int(( y0 + 1) * (self.vportheight / 2 ) + self.vporty)
@@ -150,12 +194,9 @@ class Render(object):
                 self.glVertex_coord(x, y)
             offset += m
             if offset >= limit:
-                #y += 1 if y0 < y1 else -1
-                if y0 < y1:
-                    y += 1
-                else:
-                    y-=1
+                y += 1 if y0 < y1 else -1
                 limit += 1
+
 
 
                 
