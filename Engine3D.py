@@ -7,6 +7,7 @@ Main
 """
 
 from gl import Render
+from obj import Obj
 
 #valores con los que se inicializan la ventana y viewport
 
@@ -19,8 +20,8 @@ posY = height/4
 r = Render(width,height,0,0,0)
 
 #creacion del viewport
-r.glViewPort(posX, posY, width - width/2 , height - height/2)
-
+#r.glViewPort(posX, posY, width - width/2 , height - height/2)
+"""
 #cambio de color con el que se hará el punto con parametros de 0-1 para r, g, b
 r.glColor(1,0,0)
 
@@ -60,9 +61,13 @@ r.glColor(0,0,1)
 r.glLine(-1, -1, 1, 1)
 r.glLine(1, -1, -1, 1)
 r.glLine(1, 0.5, -1, -0.5)
-r.glLine(-1, 0.5, 1, -0.5)
+r.glLine(-1, 0.5, 1, -0.5)"""
 
+r.loadModel('./models/objBarrel.obj', (960,300), (400,400))
 r.glFinish('output.bmp')
 
 
+#model=Obj('./models/objBarrel.obj')
+
+#print(model.lines)
 

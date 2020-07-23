@@ -6,6 +6,7 @@ SR2 Lines
 Funciones
 """
 import struct
+from obj import Obj
 
 def char(c):
     # 1 byte
@@ -68,7 +69,10 @@ class Render(object):
     def glVertex(self, x, y):
         nx=int((x+1)*(self.vportwidth/2)+self.vportx)
         ny=int((y+1)*(self.vportheight/2)+self.vporty)
-        self.pixels[ny][nx] = self.curr_color
+        try:
+            self.pixels[ny][nx] = self.curr_color
+        except:
+            pass
     
     #cambia de color con el que se hará el punto con parametros de 0-1
     def glColor(self, red, green, blue):
@@ -78,7 +82,10 @@ class Render(object):
         self.curr_color = color(nred, ngreen, nblue)
     
     def glVertex_coord(self, x,y):#helper para dibujar puntas en la funcion de glLine
-        self.pixels[y][x]=self.curr_color
+        try:
+            self.pixels[y][x] = self.curr_color
+        except:
+            pass
 
     #escribe el archivo de dibujo
     def glFinish(self, filename):
@@ -197,7 +204,74 @@ class Render(object):
                 y += 1 if y0 < y1 else -1
                 limit += 1
 
+    def glLine_coord(self, x0, y0, x1, y1): #window coordinates
+        dx = abs(x1 - x0)
+        dy = abs(y1 - y0)
 
+        inc = dy > dx
+
+        if inc:
+            x0, y0 = y0, x0
+            x1, y1 = y1, x1
+
+        if x0 > x1:
+            x0, x1 = x1, x0
+            y0, y1 = y1, y0
+
+        dx = abs(x1 - x0)
+        dy = abs(y1 - y0)
+
+        limit = 0.5
+    
+        #a diferencia del visto en clase, el algoritmo consultado inicializa m como 2 veces el diferencial en y 
+        #y offset como la resta entre la pendiente m y 2 veces el diferencial en x
+        #m=2*(dy)
+        
+
+        
+        m=2*dy
+    
+        y = y0
+        
+        offset=m-2*dx
+        #y = y0
+        for x in range(x0, x1 + 1):
+            if inc:
+                self.glVertex_coord(y, x)
+            else:
+                self.glVertex_coord(x, y)
+            offset += m
+            if offset >= limit:
+                if y0 < y1:
+                    y += 1
+                else:
+                    y-=1
+                limit += 1
+                #igualmente cuando offset es mayor o igual que el limite 0.5, se le resta 2 veces el diferencial en x
+                offset-=2*dx
+
+    def loadModel(self, filename, translate, scale):
+        model = Obj(filename)
+
+        for face in model.faces:
+
+            vertCount = len(face)
+
+            for vert in range(vertCount):
+                
+                v0 = model.vertices[ face[vert][0] - 1 ]
+                v1 = model.vertices[ face[(vert + 1) % vertCount][0] - 1]
+
+                
+
+                x0 = round(v0[0] * scale[0]  + translate[0])
+                y0 = round(v0[1] * scale[1]  + translate[1])
+                x1 = round(v1[0] * scale[0]  + translate[0])
+                y1 = round(v1[1] * scale[1]  + translate[1])
+
+                #self.glVertex_coord(x0, y0)
+
+                self.glLine_coord(x0, y0, x1, y1)
 
                 
 
