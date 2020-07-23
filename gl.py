@@ -28,24 +28,29 @@ BLACK = color(0,0,0)
 WHITE = color(255,255,255)
 
 class Render(object):
-    def __init__(self, width, height, red, green, blue):
-        self.glInit(width, height, red, green, blue)
+    def __init__(self, width, height): #funncion que actua como el glInit
+        #self.glInit(width, height)
+        self.curr_color = WHITE
+        self.curr_color_bg=BLACK
+        self.glCreateWindow(width, height)
 
     #Inicializa objetos internos
-    def glInit(self, width, height, red, green, blue):
+    def glInit(self, width, height):
         #esto se establece ahora en la funcion glCreatWindow
         """self.width = width
         self.height = height"""
-        self.glCreateWindow(width, height)
         self.curr_color = WHITE
         self.curr_color_bg=BLACK
-        self.glClearColor(red, green, blue)
-        self.glClear()
+        self.glCreateWindow(width, height)
+        """self.glClearColor(red, green, blue)
+        self.glClear()"""
 
     #inicializa framebuffer
     def glCreateWindow(self, width, height):
         self.width = width
         self.height = height
+        self.glClear()
+        self.glViewPort(0, 0, width, height)
 
     #define area de dibujo
     def glViewPort(self, x, y, width, height):
@@ -226,8 +231,6 @@ class Render(object):
         #a diferencia del visto en clase, el algoritmo consultado inicializa m como 2 veces el diferencial en y 
         #y offset como la resta entre la pendiente m y 2 veces el diferencial en x
         #m=2*(dy)
-        
-
         
         m=2*dy
     
