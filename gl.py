@@ -2,7 +2,7 @@
 Maria Ines Vasquez Figueroa
 18250
 Gráficas
-SR2 Lines 
+SR3 ObjModel
 Funciones
 """
 import struct
@@ -86,11 +86,16 @@ class Render(object):
         nblue=int(255*blue)
         self.curr_color = color(nred, ngreen, nblue)
     
-    def glVertex_coord(self, x,y):#helper para dibujar puntas en la funcion de glLine
+    def glVertex_coord(self, x,y):#helper para dibujar puntas en la funcion de glLine, 
+    #ahora mejorado para solo dibujar cuando no hay nada abajo ya dibujado, más eficiente
         try:
-            self.pixels[y][x] = self.curr_color
+            if (self.pixels[y][x]!=self.curr_color):
+                self.pixels[y][x] = self.curr_color
+            else:
+                pass
         except:
             pass
+
 
     #escribe el archivo de dibujo
     def glFinish(self, filename):
@@ -129,7 +134,7 @@ class Render(object):
 
         archivo.close()
 
-    def glLine(self, x0, y0, x1, y1): #algoritmo de clase modificado en base al algoritmo de Bersenham extraido de : https://www.geeksforgeeks.org/bresenhams-line-generation-algorithm/
+    def glLine(self, x0, y0, x1, y1): #algoritmo de clase modificado por mi en base al algoritmo de Bersenham extraido de : https://www.geeksforgeeks.org/bresenhams-line-generation-algorithm/
         x0 = int(( x0 + 1) * (self.vportwidth / 2 ) + self.vportx)
         x1 = int(( x1 + 1) * (self.vportwidth / 2 ) + self.vportx)
         y0 = int(( y0 + 1) * (self.vportheight / 2 ) + self.vporty)
@@ -209,7 +214,7 @@ class Render(object):
                 y += 1 if y0 < y1 else -1
                 limit += 1
 
-    def glLine_coord(self, x0, y0, x1, y1): #window coordinates
+    def glLine_coord(self, x0, y0, x1, y1): #window coordinates en base a mi algoritmo realizado, no da problema con division con cero
         dx = abs(x1 - x0)
         dy = abs(y1 - y0)
 
@@ -230,14 +235,12 @@ class Render(object):
     
         #a diferencia del visto en clase, el algoritmo consultado inicializa m como 2 veces el diferencial en y 
         #y offset como la resta entre la pendiente m y 2 veces el diferencial en x
-        #m=2*(dy)
         
         m=2*dy
     
         y = y0
         
         offset=m-2*dx
-        #y = y0
         for x in range(x0, x1 + 1):
             if inc:
                 self.glVertex_coord(y, x)
@@ -253,28 +256,25 @@ class Render(object):
                 #igualmente cuando offset es mayor o igual que el limite 0.5, se le resta 2 veces el diferencial en x
                 offset-=2*dx
 
-    def loadModel(self, filename, translate, scale):
+    def loadModel(self, filename, translate, scale): #funcion para crear modelo Obj
         model = Obj(filename)
-
         for face in model.faces:
-
-            vertCount = len(face)
-
+            vertCount = len(face) #conexion entre vertices para crear Wireframe
             for vert in range(vertCount):
-                
                 v0 = model.vertices[ face[vert][0] - 1 ]
                 v1 = model.vertices[ face[(vert + 1) % vertCount][0] - 1]
-
-                
-
-                x0 = round(v0[0] * scale[0]  + translate[0])
-                y0 = round(v0[1] * scale[1]  + translate[1])
-                x1 = round(v1[0] * scale[0]  + translate[0])
-                y1 = round(v1[1] * scale[1]  + translate[1])
+                #coordenadas para dibujar linea con escala y traslacion setteado
+                x0 = int(v0[0] * scale[0]  + translate[0])
+                y0 = int(v0[1] * scale[1]  + translate[1])
+                x1 = int(v1[0] * scale[0]  + translate[0])
+                y1 = int(v1[1] * scale[1]  + translate[1])
 
                 #self.glVertex_coord(x0, y0)
-
+                
                 self.glLine_coord(x0, y0, x1, y1)
+                
+                
+                
 
                 
 

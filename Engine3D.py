@@ -2,7 +2,7 @@
 Maria Ines Vasquez Figueroa
 18250
 Gráficas
-SR2 Lines
+SR3 ObjModel
 Main
 """
 
@@ -13,11 +13,15 @@ from obj import Obj
 
 width=1920
 height=1080
-"""posX = width/4
-posY = height/4"""
+
 #creacion de Window
-#los ultimos 3 parametros es para settear el color del fondo de la ventana con parametros de 0-1 para rojo, verde y azul
+
 r = Render(width,height)
+r.loadModel('./models/objBarrel.obj', (960,300), (400,400))
+r.glFinish('output.bmp')
+
+##IGNORAR DESDE AQUI
+##codigo de laboratorios pasados modificado para correcion de funciones
 """
 #creacion del viewport
 #r.glViewPort(posX, posY, width - width/2 , height - height/2)
@@ -61,13 +65,10 @@ r.glColor(0,0,1)
 r.glLine(-1, -1, 1, 1)
 r.glLine(1, -1, -1, 1)
 r.glLine(1, 0.5, -1, -0.5)
-r.glLine(-1, 0.5, 1, -0.5)"""
-
-r.loadModel('./models/objBarrel.obj', (960,300), (400,400))
-r.glFinish('output.bmp')
+r.glLine(-1, 0.5, 1, -0.5)
 
 
-#model=Obj('./models/objBarrel.obj')
+r.glFinish('output.bmp')"""
 
-#print(model.lines)
+
 
