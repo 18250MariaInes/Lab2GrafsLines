@@ -7,7 +7,7 @@ Main
 """
 
 from gl import Render
-from obj import Obj
+
 
 #valores con los que se inicializan la ventana y viewport
 

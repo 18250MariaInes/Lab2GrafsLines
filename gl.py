@@ -6,7 +6,7 @@ Lab 1 Filling Polygons
 Funciones
 """
 import struct
-from obj import Obj
+#from obj import Obj
 
 def char(c):
     # 1 byte
