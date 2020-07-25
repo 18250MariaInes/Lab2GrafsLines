@@ -2,7 +2,7 @@
 Maria Ines Vasquez Figueroa
 18250
 Gráficas
-SR3 ObjModel
+Lab 1 Filling Polygons
 Main
 """
 
@@ -11,64 +11,77 @@ from obj import Obj
 
 #valores con los que se inicializan la ventana y viewport
 
-width=1920
-height=1080
+width=1000
+height=500
 
 #creacion de Window
 
 r = Render(width,height)
-r.loadModel('./models/objBarrel.obj', (960,300), (400,400))
+r.glClearColor(0, 0, 0) #este es background color
+r.glClear()
+r.glColor(1, 0, 0)
+
+#poly 1
+poly1 = [(165, 380), (185, 360), 
+(185, 360), (180, 330),
+(180, 330), (207, 345),
+(207, 345), (233, 330), 
+(233, 330), (230, 360),
+(230, 360), (250, 380),
+(250, 380), (220, 385),
+(220, 385), (205, 410),
+(205, 410), (193, 383),
+(193, 383), (165, 380)]
+r.drawPoly(poly1)
+
+#poly 2
+poly2 = [(321, 335), (288, 286),
+(288, 286), (339, 251),
+(339, 251), (374, 302),
+(374, 302), (321, 335)]
+r.drawPoly(poly2)
+
+#poly 3
+poly3 = [(377, 249), (411, 197),
+(411, 197), (436, 249),
+(436, 249), (377, 249)]
+r.drawPoly(poly3)
+
+#poly 4
+poly4 = [(413, 177), (448, 159),
+(448, 159), (502, 88),
+(502, 88), (553, 53),
+(553, 53), (535, 36),
+(535, 36), (676, 37),
+(676, 37), (660, 52),
+(660, 52), (750, 145),
+(750, 145), (761, 179),
+(761, 179), (672, 192),
+(672, 192), (659, 214),
+(659, 214), (615, 214),
+(615, 214), (632, 230),
+(632, 230), (580, 230),
+(580, 230), (597, 215),
+(597, 215), (552, 214),
+(552, 214), (517, 144),
+(517, 144), (466, 180),
+(413, 177), (466, 180)]
+r.drawPoly(poly4)
+
+#poly 5
+poly5 = [(682, 175), (708, 120),
+(708, 120), (735, 148),
+(735, 148), (739, 170),
+(739, 170), (682, 175)]
+r.drawPoly(poly5)
+
+
+
+
+
 r.glFinish('output.bmp')
 
-##IGNORAR DESDE AQUI
-##codigo de laboratorios pasados modificado para correcion de funciones
-"""
-#creacion del viewport
-#r.glViewPort(posX, posY, width - width/2 , height - height/2)
 
-#cambio de color con el que se hará el punto con parametros de 0-1 para r, g, b
-r.glColor(1,0,0)
-
-
-#dibujo de estrella verde
-r.glColor(0,1,0)
-##algoritmo para dibujar linea modificado en base al algoritmo de Bersenham extraido de : https://www.geeksforgeeks.org/bresenhams-line-generation-algorithm/
-r.glLine(-1, -1, 0,1)
-r.glLine(0, 1,1, -1)
-r.glLine(1, -1, -1,0.5)
-r.glLine(-1, 0.5, 1,0.5)
-r.glLine(1, 0.5, -1,-1)
-
-#asterisco desde el centro rojo
-r.glColor(1,0,0)
-r.glLine(0, 0, 0,1)
-r.glLine(0, 0, 0,-1)
-r.glLine(0, 0, 1,1)
-r.glLine(0, 0, -1,-1)
-r.glLine(0, 0, -1,1)
-r.glLine(0, 0, 1,-1)
-r.glLine(0, 0, -1,0)
-r.glLine(0, 0, 1,0)
-r.glLine(0, 0, -0.5,1)
-r.glLine(0, 0, 0.5,1)
-r.glLine(0, 0, -0.5,-1)
-r.glLine(0, 0, 0.5,-1)
-r.glLine(0, 0, 1, 0.5)
-r.glLine(0, 0, -1, 0.5)
-r.glLine(0, 0, 1, -0.5)
-r.glLine(0, 0, -1, -0.5)
-
-#con este algoritmo puede dibujar desde cualquier angulo de derecha a izquierda y viceversa
-#diagonales azules pero de esquina a esquina, no desde el centro
-#comentar para ver todo el asterisco anterior
-r.glColor(0,0,1)
-r.glLine(-1, -1, 1, 1)
-r.glLine(1, -1, -1, 1)
-r.glLine(1, 0.5, -1, -0.5)
-r.glLine(-1, 0.5, 1, -0.5)
-
-
-r.glFinish('output.bmp')"""
 
 
 

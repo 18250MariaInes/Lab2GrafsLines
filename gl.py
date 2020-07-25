@@ -2,7 +2,7 @@
 Maria Ines Vasquez Figueroa
 18250
 Gráficas
-SR3 ObjModel
+Lab 1 Filling Polygons
 Funciones
 """
 import struct
@@ -272,6 +272,18 @@ class Render(object):
                 #self.glVertex_coord(x0, y0)
                 
                 self.glLine_coord(x0, y0, x1, y1)
+
+    
+    def drawPoly(self,points):
+        count=len(points)
+        for i in range(count):
+            v0=points[i]
+            v1=points[(i+1)%count]
+
+            self.glLine_coord(v0[0], v0[1], v1[0], v1[1])
+
+
+
                 
                 
                 
