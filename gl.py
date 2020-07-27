@@ -255,6 +255,7 @@ class Render(object):
                 limit += 1
                 #igualmente cuando offset es mayor o igual que el limite 0.5, se le resta 2 veces el diferencial en x
                 offset-=2*dx
+                
     #codigo para cargar modelo de laboratorio pasado
     """def loadModel(self, filename, translate, scale): #funcion para crear modelo Obj
         model = Obj(filename)
@@ -303,8 +304,9 @@ class Render(object):
         return c
 
     def filling_polygon(self, poly):
+        #ya que la funcion para el contorno de poly ya recorria todas las recordanas, recicle ese codigo para la funcion de llenado y retorna todas los puntos en una lista
         points_poly=self.drawPoly(poly)
-
+        #Inicializacon de valores para algoritmo
         pos=0
         x_max=0
         y_max=0
@@ -312,22 +314,22 @@ class Render(object):
         x_min=0
 
         for i in points_poly:
-            if pos%2==0:
-                if (x_min==0):
+            if pos%2==0: #si es par es una coord de x y si es impar es una coord de y
+                if (x_min==0): #si no hay un x minimo setteado se le asigna el valor
                     x_min=i
                 else:
                     if (i<x_min):
-                        x_min=i
+                        x_min=i #si es menor que el valor menor anterior se resettea
                 if (i>x_max):
-                    x_max=i
+                    x_max=i #si es mayor que el valor mayor anterior se resettea
             else:
                 if (y_min==0):
-                    y_min=i
+                    y_min=i #si no hay un x minimo setteado se le asigna el valor
                 else:
                     if (i<y_min):
-                        y_min=i
+                        y_min=i #si es menor que el valor menor anterior se resettea
                 if (i>y_max):
-                    y_max=i
+                    y_max=i #si es mayor que el valor mayor anterior se resettea
             pos+=1
 
         """print(x_max)
@@ -335,9 +337,9 @@ class Render(object):
         print(y_max)
         print(y_min)"""
 
-        for x in range(x_min, x_max):
-            for y in range (y_min, y_max):
-                if self.is_inside(x,y,poly):
+        for x in range(x_min, x_max): #se recorre desde el x menor al mayor
+            for y in range (y_min, y_max): #se recorre del y menor al mayor
+                if self.is_inside(x,y,poly): #si el punto esta adentro del contorno del poligono, se dibuja el punto
                     self.glVertex_coord(x,y)
         
 

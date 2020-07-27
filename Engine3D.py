@@ -35,6 +35,7 @@ poly1 = [(165, 380), (185, 360),
 r.drawPoly(poly1)
 r.filling_polygon(poly1)
 r.glColor(0, 1, 0)
+
 #poly 2
 poly2 = [(321, 335), (288, 286),
 (288, 286), (339, 251),
