@@ -255,8 +255,8 @@ class Render(object):
                 limit += 1
                 #igualmente cuando offset es mayor o igual que el limite 0.5, se le resta 2 veces el diferencial en x
                 offset-=2*dx
-
-    def loadModel(self, filename, translate, scale): #funcion para crear modelo Obj
+    #codigo para cargar modelo de laboratorio pasado
+    """def loadModel(self, filename, translate, scale): #funcion para crear modelo Obj
         model = Obj(filename)
         for face in model.faces:
             vertCount = len(face) #conexion entre vertices para crear Wireframe
@@ -271,16 +271,77 @@ class Render(object):
 
                 #self.glVertex_coord(x0, y0)
                 
-                self.glLine_coord(x0, y0, x1, y1)
+                self.glLine_coord(x0, y0, x1, y1)"""
 
     
     def drawPoly(self,points):
         count=len(points)
+        points_poly=[]
         for i in range(count):
             v0=points[i]
             v1=points[(i+1)%count]
+            points_poly.append(v0[0])
+            points_poly.append(v0[1])
+            points_poly.append(v1[0])
+            points_poly.append(v1[1])
 
             self.glLine_coord(v0[0], v0[1], v1[0], v1[1])
+        #print(points_poly)
+        return points_poly
+
+    def is_inside(self, x, y, polygon): #codigo extraido de https://handwiki.org/wiki/Even%E2%80%93odd_rule proporcionado en Discord
+        lenght = len(polygon)
+        i = 0
+        j = lenght - 1
+        c = False
+        for i in range(lenght):
+            if ((polygon[i][1] > y) != (polygon[j][1] > y)) and \
+                    (x < polygon[i][0] + (polygon[j][0] - polygon[i][0]) * (y - polygon[i][1]) /
+                                    (polygon[j][1] - polygon[i][1])):
+                c = not c
+            j = i
+        return c
+
+    def filling_polygon(self, poly):
+        points_poly=self.drawPoly(poly)
+
+        pos=0
+        x_max=0
+        y_max=0
+        y_min=0
+        x_min=0
+
+        for i in points_poly:
+            if pos%2==0:
+                if (x_min==0):
+                    x_min=i
+                else:
+                    if (i<x_min):
+                        x_min=i
+                if (i>x_max):
+                    x_max=i
+            else:
+                if (y_min==0):
+                    y_min=i
+                else:
+                    if (i<y_min):
+                        y_min=i
+                if (i>y_max):
+                    y_max=i
+            pos+=1
+
+        """print(x_max)
+        print(x_min)
+        print(y_max)
+        print(y_min)"""
+
+        for x in range(x_min, x_max):
+            for y in range (y_min, y_max):
+                if self.is_inside(x,y,poly):
+                    self.glVertex_coord(x,y)
+        
+
+
 
 
 

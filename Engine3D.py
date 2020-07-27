@@ -33,19 +33,24 @@ poly1 = [(165, 380), (185, 360),
 (205, 410), (193, 383),
 (193, 383), (165, 380)]
 r.drawPoly(poly1)
-
+r.filling_polygon(poly1)
+r.glColor(0, 1, 0)
 #poly 2
 poly2 = [(321, 335), (288, 286),
 (288, 286), (339, 251),
 (339, 251), (374, 302),
 (374, 302), (321, 335)]
 r.drawPoly(poly2)
+r.filling_polygon(poly2)
+r.glColor(0, 0, 1)
 
 #poly 3
 poly3 = [(377, 249), (411, 197),
 (411, 197), (436, 249),
 (436, 249), (377, 249)]
 r.drawPoly(poly3)
+r.filling_polygon(poly3)
+r.glColor(1, 0, 1)
 
 #poly 4
 poly4 = [(413, 177), (448, 159),
@@ -67,6 +72,8 @@ poly4 = [(413, 177), (448, 159),
 (517, 144), (466, 180),
 (413, 177), (466, 180)]
 r.drawPoly(poly4)
+r.filling_polygon(poly4)
+r.glColor(0, 1, 1)
 
 #poly 5
 poly5 = [(682, 175), (708, 120),
@@ -74,6 +81,7 @@ poly5 = [(682, 175), (708, 120),
 (735, 148), (739, 170),
 (739, 170), (682, 175)]
 r.drawPoly(poly5)
+r.filling_polygon(poly5)
 
 
 
